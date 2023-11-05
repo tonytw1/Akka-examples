@@ -6,7 +6,7 @@ scalaVersion := s"2.13.12"
 
 resolvers += "Akka library repository".at("https://repo.akka.io/maven")
 
-lazy val akkaVersion = "2.9.0"
+lazy val akkaVersion = "2.6.20"
 
 // Run in a separate JVM, to make sure sbt waits until all threads have
 // finished before returning.
