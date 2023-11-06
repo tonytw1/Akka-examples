@@ -28,19 +28,18 @@ object AkkaQuickstart extends App {
   myActorRef ! "Hello world"
   anotherActorRef ! "Hello world"
 
-  class MyComponent(anotherActorRef: ActorRef) {
-
-    def doSomething(): Unit = {
-      println("Did something")
-      anotherActorRef ! "Hey I did something"
-    }
-  }
-
   private val myComponent = new MyComponent(anotherActorRef)
 
   myComponent.doSomething()
 
   println("Done")
+}
+
+class MyComponent(anotherActorRef: ActorRef) {
+  def doSomething(): Unit = {
+    println("Did something")
+    anotherActorRef ! "Hey I did something"
+  }
 }
 
 
