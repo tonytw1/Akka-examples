@@ -6,10 +6,9 @@ import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 //#main-class
 object AkkaQuickstart extends App {
   val actorSystem = ActorSystem()
+  private val anotherActorRef: ActorRef = actorSystem.actorOf(Props[AnotherActor], name = "anotherActor")
 
   class MyActor extends Actor {
-    private val anotherActorRef: ActorRef = actorSystem.actorOf(Props[AnotherActor])
-
     override def receive: Receive = {
       case m =>
         println("MyActor Received: " + m)
@@ -25,13 +24,11 @@ object AkkaQuickstart extends App {
   }
 
   private val myActorRef: ActorRef = actorSystem.actorOf(Props[MyActor], name = "myActor")
-  private val anotherActorRef: ActorRef = actorSystem.actorOf(Props[AnotherActor], name = "anotherActor")
 
   myActorRef ! "Hello world"
   anotherActorRef ! "Hello world"
 
-  object MyComponent {
-    private val anotherActorRef: ActorRef = actorSystem.actorOf(Props[AnotherActor])
+  class MyComponent(anotherActorRef: ActorRef) {
 
     def doSomething(): Unit = {
       println("Did something")
@@ -39,7 +36,9 @@ object AkkaQuickstart extends App {
     }
   }
 
-  MyComponent.doSomething()
+  private val myComponent = new MyComponent(anotherActorRef)
+
+  myComponent.doSomething()
 
   println("Done")
 }
